@@ -20,7 +20,7 @@
 ## Installation
    Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/your-repo/zak-hunt.git
+   git clone https://github.com/Eli0zak/zak-hunt.git
 ```
 
 ### Change permissions for the file zak-hunt.py:
