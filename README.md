@@ -103,18 +103,3 @@ Option Selection:
 
 ZAK-Hunt is licensed under the GNU GPLv3.
 
-### Steps to add this README to GitHub:
-
-1. Open your terminal and navigate to your local repository for **ZAK-Hunt**.
-2. Create a new file named `README.md`:
-```
-   touch README.md
-```
-Open the README.md file in your preferred text editor and copy the above Markdown code into it.
-Save the changes and close the editor.
-Add, commit, and push the changes to your GitHub repository:
-```
-git add README.md
-git commit -m "Add README for ZAK-Hunt"
-git push origin main  # Replace 'main' with your branch name if different
-```
