@@ -18,17 +18,11 @@
 - [Gobuster](https://github.com/OJ/gobuster) (ensure Gobuster is installed)
 
 ## Installation
-1. Clone the repository to your local machine:
+   Clone the repository to your local machine:
    ```bash
    git clone https://github.com/your-repo/zak-hunt.git
-
-2. Clone the repository to your local machine:
-   ```bash
-   git clone https://github.com/your-repo/zak-hunt.git
-3. Install the required dependencies (if any):
-  ```bash
- pip install -r requirements.txt
 ```
+
 ### Change permissions for the file zak-hunt.py:
 
 ```1.bash
