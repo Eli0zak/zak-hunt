@@ -12,6 +12,7 @@ import sys
 from queue import Queue
 from datetime import datetime
 import subprocess
+
 logo = """
  
 ███████╗ █████╗ ██╗  ██╗      ██╗  ██╗██╗   ██╗███╗   ██╗████████╗
@@ -85,7 +86,25 @@ def zak_hunt(target):
     print("*" * 60)
     print("nmap -p{ports} -sV -sC -T4 -Pn -oA {ip} {ip}".format(ports=",".join(discovered_ports), ip=target))
     print("*" * 60)
-    nmap = "nmap -p{ports} -sV -sC -T4 -Pn -oA {ip} {ip}".format(ports=",".join(discovered_ports), ip=target)
+
+    # Automatically run the full Nmap scan
+    print("-" * 60)
+    print("Running full Nmap scan...")
+    try:
+        full_nmap_cmd = "nmap -p{ports} -sV -sC -T4 -Pn -oA {ip} {ip}".format(ports=",".join(discovered_ports), ip=target)
+        print(full_nmap_cmd)  # Show the Nmap command that will be executed
+        os.mkdir(target)  # Create a directory for saving results
+        os.chdir(target)  # Change to the new directory
+        os.system(full_nmap_cmd)  # Execute the full Nmap scan
+        t3 = datetime.now()
+        total1 = t3 - t1
+        print("-" * 60)
+        print("Full Nmap scan completed in " + str(total1))
+        print("Press enter to quit...")
+        input()
+    except FileExistsError as e:
+        print(e)
+        exit()
 
     def gobuster_scan():
         print("-" * 60)
@@ -112,41 +131,6 @@ def zak_hunt(target):
             print(f"Error running Gobuster: {e}")
 
     gobuster_scan()
-
-    def automate():
-        choice = '0'
-        while choice == '0':
-            print("Would you like to run Nmap or quit to terminal?")
-            print("-" * 60)
-            print("1 = Run suggested Nmap scan")
-            print("2 = Run another ZAK-Hunt scan")
-            print("3 = Exit to terminal")
-            print("-" * 60)
-            choice = input("Option Selection: ")
-            if choice == "1":
-                try:
-                    print(nmap)
-                    os.mkdir(target)
-                    os.chdir(target)
-                    os.system(nmap)
-                    t3 = datetime.now()
-                    total1 = t3 - t1
-                    print("-" * 60)
-                    print("Combined scan completed in " + str(total1))
-                    print("Press enter to quit...")
-                    input()
-                except FileExistsError as e:
-                    print(e)
-                    exit()
-            elif choice == "2":
-                zak_hunt(target)
-            elif choice == "3":
-                sys.exit()
-            else:
-                print("Please make a valid selection")
-                automate()
-
-    automate()
 
 if __name__ == '__main__':
     target = input("Enter your target IP address or URL here: ")
