@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# ZAK-Hunt - Multi-threaded Port Scanner with Gobuster integration
+# ZAK-Hunt - Multi-threaded Port Scanner with Dirsearch integration
 # Author: Moataz Zaky
 # v1.1
 # https://eli0zak.github.io/
@@ -22,7 +22,7 @@ logo = """
 ███████╗██║  ██║██║  ██╗      ██║  ██║╚██████╔╝██║ ╚████║   ██║   
 ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝      ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   
                                                                   
-   zak-hunt v1.0
+   zak-hunt v1.1
 """
 
 author_info = "Author: mo3tazaky@hotmail.com"
@@ -106,31 +106,26 @@ def zak_hunt(target):
         print(e)
         exit()
 
-    def gobuster_scan():
+    def dirsearch_scan():
         print("-" * 60)
-        print("Would you like to perform a Gobuster scan?")
+        print("Would you like to perform a Dirsearch scan?")
         print("1 = Yes, for Directory Busting")
-        print("2 = Yes, for DNS Subdomain Busting")
-        print("3 = No, Skip Gobuster")
+        print("2 = No, Skip Dirsearch")
         choice = input("Option Selection: ")
 
         if choice == "1":
             wordlist = input("Enter the path to your wordlist for directories: ")
-            gobuster_cmd = f"gobuster dir -u http://{target} -w {wordlist}"
-        elif choice == "2":
-            wordlist = input("Enter the path to your wordlist for DNS: ")
-            gobuster_cmd = f"gobuster dns -d {target} -w {wordlist}"
+            dirsearch_cmd = f"dirsearch -u http://{target} -w {wordlist}"
+            print("Running Dirsearch...")
+            try:
+                result = subprocess.run(dirsearch_cmd, shell=True, capture_output=True, text=True)
+                print(result.stdout)
+            except Exception as e:
+                print(f"Error running Dirsearch: {e}")
         else:
             return
 
-        print("Running Gobuster...")
-        try:
-            result = subprocess.run(gobuster_cmd, shell=True, capture_output=True, text=True)
-            print(result.stdout)
-        except Exception as e:
-            print(f"Error running Gobuster: {e}")
-
-    gobuster_scan()
+    dirsearch_scan()
 
 if __name__ == '__main__':
     target = input("Enter your target IP address or URL here: ")
